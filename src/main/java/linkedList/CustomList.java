@@ -7,14 +7,8 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-public interface CustomList<T>{
-    /**
-     * Метод добавления элемента в конец списка
-     *
-     * @param obj элемент, который мы хотим добавить в список
-     * @return
-     */
-    boolean add(T obj);
+public interface CustomList<T> extends CustomQueue<T> {
+
 
     /**
      * Метод вставки элемента в список
@@ -42,7 +36,7 @@ public interface CustomList<T>{
      * @param obj Удаляемый элемент
      * @return Возвращает true, если удаление прошло успешно, в ином случае false
      */
-    boolean remove(Object obj);
+    void remove(Object obj);
 
     /**
      * Метод для удаления элемента из списка по заданному индексу
@@ -55,10 +49,10 @@ public interface CustomList<T>{
     /**
      * Метод для удаления элементов из списка, которые были переданы в качестве параметров
      *
-     * @param collection Элементы, которые будут удалены из списка
+     * @param obj Элементы, которые будут удалены из списка
      * @return Возвращает true, если произошло изменение списка, в ином случае false
      */
-    boolean removeAll(@NotNull Collection<?> collection);
+    void removeAll(Object obj);
 
     /**
      * - изменение всех элементов списка с данным значением на новое.
@@ -119,7 +113,7 @@ public interface CustomList<T>{
     CustomList<T> distinct();
 
     /**
-     *  - изменение порядка элементов на обратный.
+     * - изменение порядка элементов на обратный.
      *
      * @return возвращает новый список, который развернули полностью
      */
@@ -147,5 +141,12 @@ public interface CustomList<T>{
      */
     T min();
 
+    /**
+     * Метод, добавляющий элемент в начало списка
+     *
+     * @param obj Объект, который будет добавлен
+     */
+    void addFirst(T obj);
+    T delLast();
 
 }

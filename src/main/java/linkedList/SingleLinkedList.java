@@ -17,11 +17,18 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
         this.head = this.tail = null;
     }
 
+    @Override
+    public void addFirst(T obj) {
+        var node = new Node<>(obj, null);
+        if (size == 0) {
+            head = tail = node;
+        } else {
+            node.next = head;
+            head = node;
+        }
 
-    public SingleLinkedList(@NotNull Collection<T> collection) {
-        this.size = collection.size();
+        size++;
     }
-
 
     @Override
     public boolean add(T obj) {
@@ -38,38 +45,99 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
             size++;
             return true;
         }
+
         return true;
     }
 
     @Override
     public void add(T obj, int index) {
+        if (index == 0) {
+            addFirst(obj);
+            return;
+        }
+        if (index == size) {
+            add(obj);
+            return;
+        }
+        var node = new Node<>(obj, null);
+        var prev = getNode(index - 1);
 
+        node.next = prev.next;
+        prev.next = node;
+        size++;
     }
 
     @Override
     public void clear() {
-
+        head = tail = null;
+        size = 0;
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
-    public boolean remove(Object obj) {
-        return false;
+    public T delLast() {
+        var buff = getNode(size - 1);
+        tail = getNode(size - 2);
+        tail.next = null;
+        size--;
+        return buff.data;
     }
+
+    @Override
+    public T delFirst() {
+        var buffNode = head;
+        head = buffNode.next;
+        buffNode.next = null;
+        size--;
+        return buffNode.data;
+    }
+
+    @Override
+    public void remove(Object obj) {
+        int index = indexOf(obj);
+        if (index != -1) {
+            remove(index);
+        }
+    }
+
+    @Override
+    public void removeAll(Object object) {
+        Node<T> current = head;
+        Node<T> prev = null;
+
+        while (current != null) {
+            if (current.data.equals(object)) {
+                if (prev == null) {
+                    head = current.next;
+                } else {
+                    prev.next = current.next;
+                }
+            } else {
+                prev = current;
+            }
+            current = current.next;
+        }
+    }
+
 
     @Override
     public T remove(int index) {
-        return null;
+        if (index == 0) return delFirst();
+        if (index == size - 1) return delLast();
+
+        var prevNode = getNode(index - 1);
+        var node = getNode(index);
+        prevNode.next = node.next;
+        node.next = null;
+
+        size--;
+        return node.data;
     }
 
-    @Override
-    public boolean removeAll(@NotNull Collection<?> collection) {
-        return false;
-    }
 
     @Override
     public void replace(T obj) {
@@ -83,12 +151,19 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size == 0;
     }
 
     @Override
     public int indexOf(Object obj) {
-        return 0;
+        var node = head;
+        for (int i = 0; i < size; i++) {
+            if (node.data.equals(obj)) {
+                return i;
+            }
+            node = node.next;
+        }
+        return -1;
     }
 
     @Override
@@ -121,20 +196,59 @@ public class SingleLinkedList<T extends Comparable<T>> implements CustomList<T>,
         return null;
     }
 
+
     @Override
     public T max() {
-        return null;
+        var biggestNode = this.head;
+        var nodeForCycle = this.head;
+
+        for (int i = 0; i < this.size; i++) {
+
+            if (nodeForCycle.compareTo(biggestNode) > 0)
+                biggestNode = nodeForCycle;
+
+            nodeForCycle = nodeForCycle.next;
+        }
+
+        return biggestNode.data;
     }
+
 
     @Override
     public T min() {
-        return null;
+        var minimalNode = this.head;
+        var nodeForCycle = this.head;
+
+        for (int i = 0; i < this.size; i++) {
+
+            if (nodeForCycle.compareTo(minimalNode) < 0)
+                minimalNode = nodeForCycle;
+
+            nodeForCycle = nodeForCycle.next;
+        }
+
+        return minimalNode.data;
     }
 
     @NotNull
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new Iterator<T>() {
+
+            private Node<T> node = head;
+
+            @Override
+            public boolean hasNext() {
+                return node != null;
+            }
+
+            @Override
+            public T next() {
+                T obj = node.data;
+                node = node.next;
+                return obj;
+            }
+        };
     }
 
     @Override
