@@ -6,12 +6,13 @@ public interface CustomQueue<T> {
      *
      * @param obj Объект, который будет добавлен
      */
+    @SuppressWarnings("UnusedReturnValue")
     boolean add(T obj);
 
     /**
      * Метод, удаляющий элемент из начала списка
      *
-     * @return
+     * @return Возвращает удаленный элемент
      */
 
     T delFirst();

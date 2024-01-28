@@ -1,12 +1,6 @@
 package linkedList;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
+@SuppressWarnings({"unused","UnusedReturnValue"})
 public interface CustomList<T> extends CustomQueue<T> {
 
 
@@ -16,6 +10,7 @@ public interface CustomList<T> extends CustomQueue<T> {
      * @param obj   элемент, который мы хотим вставить в список на заданную позицию
      * @param index индекс, по которому осуществится вставка
      */
+
     void add(T obj, int index);
 
     /**
@@ -34,7 +29,6 @@ public interface CustomList<T> extends CustomQueue<T> {
      * Метод для удаления заданного элемента из списка
      *
      * @param obj Удаляемый элемент
-     * @return Возвращает true, если удаление прошло успешно, в ином случае false
      */
     void remove(Object obj);
 
@@ -49,17 +43,17 @@ public interface CustomList<T> extends CustomQueue<T> {
     /**
      * Метод для удаления элементов из списка, которые были переданы в качестве параметров
      *
-     * @param obj Элементы, которые будут удалены из списка
-     * @return Возвращает true, если произошло изменение списка, в ином случае false
+     * @param obj Элемент, который будет удален из списка
      */
     void removeAll(Object obj);
 
     /**
      * - изменение всех элементов списка с данным значением на новое.
      *
-     * @param obj элемент из списка, который мы хотим заменить на новое.
+     * @param replaceObj элемент из списка, который мы хотим заменить на новое.
+     * @param Obj значение, на которое будет изменено значение replaceObj
      */
-    void replace(T obj);
+    void replace(T replaceObj, T Obj);
 
     /**
      * Метод, который проверяет симметричен ли список
@@ -110,22 +104,12 @@ public interface CustomList<T> extends CustomQueue<T> {
      *
      * @return возвращает новый список, где нет повторяющихся элементов.
      */
-    CustomList<T> distinct();
+    CustomList<T> distinctNew();
 
     /**
      * - изменение порядка элементов на обратный.
-     *
-     * @return возвращает новый список, который развернули полностью
      */
-    CustomList<T> reversed();
-
-    /**
-     * Сортировка элементов списка двумя способами (изменение указателей, изменение значений элементов)
-     *
-     * @param key - ключ сортировки (изменение указателей - "changePointer", изменение значение - "changeValue").
-     * @return возвращает отсортированный список.
-     */
-    CustomList<T> sort(String key);
+    void reversed();
 
     /**
      * Поиск наибольшего значения в списке
@@ -147,6 +131,7 @@ public interface CustomList<T> extends CustomQueue<T> {
      * @param obj Объект, который будет добавлен
      */
     void addFirst(T obj);
+
     T delLast();
 
 }

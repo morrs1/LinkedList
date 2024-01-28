@@ -1,5 +1,6 @@
 package linkedList;
 
+@SuppressWarnings("unused")
 public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
     T data;
     Node<T> prev;
@@ -21,6 +22,7 @@ public class Node<T extends Comparable<T>> implements Comparable<Node<T>> {
         this.data = data;
         this.next = next;
     }
+
 
     /**
      * Метод, сравнивающий два элемента
